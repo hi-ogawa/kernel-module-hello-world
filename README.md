@@ -67,8 +67,27 @@ $ dmesg | tail
 [  308.235215] Goodbye Doe
 ```
 
+# checkinstall as debian package
+
+```
+$ sudo checkinstall --pkgname=lkm-hello-world -y
+... (long message) ...
+$ dpkg-deb -c lkm-hello-world_20160914-1_amd64.deb
+drwxr-xr-x root/root         0 2016-09-14 21:20 ./
+drwxr-xr-x root/root         0 2016-09-14 21:20 ./lib/
+drwxr-xr-x root/root         0 2016-09-14 21:20 ./lib/modules/
+drwxr-xr-x root/root         0 2016-09-14 21:20 ./lib/modules/4.4.0-36-generic/
+drwxr-xr-x root/root         0 2016-09-14 21:20 ./lib/modules/4.4.0-36-generic/extra/
+-rw-r--r-- root/root      4936 2016-09-14 21:20 ./lib/modules/4.4.0-36-generic/extra/hello.ko
+$ sudo depmod
+$ sudo modprobe hello
+$ sudo modprobe -r hello
+$ sudo dpkg -P lkm-hello-world
+```
+
 # Reference
 
 - http://www.thegeekstuff.com/2013/07/write-linux-kernel-module
 - http://derekmolloy.ie/writing-a-linux-kernel-module-part-1-introduction/
 - http://www.tldp.org/LDP/lkmpg/2.6/html/lkmpg.html
+- https://github.com/patjak/bcwc_pcie
